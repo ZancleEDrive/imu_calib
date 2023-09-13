@@ -54,7 +54,7 @@ ApplyCalib::ApplyCalib() :
   ros::NodeHandle nh_private("~");
 
   std::string calib_file;
-  nh_private.param<std::string>("calib_file", calib_file, "imu_calib.yaml");
+  nh_private.param<std::string>("calib_file", calib_file, "/home/giovanni/catkin_ws/src/imu_calib/src/imu_calib.yaml");
 
   if (!calib_.loadCalib(calib_file) || !calib_.calibReady())
   {
@@ -68,7 +68,7 @@ ApplyCalib::ApplyCalib() :
   int queue_size;
   nh_private.param<int>("queue_size", queue_size, 5);
 
-  raw_sub_ = nh.subscribe("raw", queue_size, &ApplyCalib::rawImuCallback, this);
+  raw_sub_ = nh.subscribe("/autonomous_steer_bot/imu/data", queue_size, &ApplyCalib::rawImuCallback, this);
   corrected_pub_ = nh.advertise<sensor_msgs::Imu>("corrected", queue_size);
 }
 
